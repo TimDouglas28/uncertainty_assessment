@@ -31,5 +31,5 @@ It is intended for transparency and illustration rather than as a fully packaged
 ## Citation
 
 If you use this code, please cite:
-Douglas, T., and Delos Reyes, R. and Kitamoto, A. (2026)
+Douglas, T., Delos Reyes, R., and Kitamoto, A. (2026)
 *LLM-based uncertainty assessment of social media situational signals for crisis reporting.*
