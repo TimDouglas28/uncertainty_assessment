@@ -1,4 +1,4 @@
-# Uncertainty Assessment for Social Media Situational Signals
+# Uncertainty Assessment of Social Media Situational Signals
 
 This repository contains the code for the paper **"LLM-based Uncertainty Assessment of Social Media Situational Signals for Crisis Reporting"**
 
