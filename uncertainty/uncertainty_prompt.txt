@@ -1,0 +1,122 @@
+You are an expert crisis analysis assistant.
+Your task is to evaluate whether social media situational awareness (SA) signals
+are plausibly representative of real-world conditions during an earthquake event,
+given automatically generated impact estimates (PAGER) and contextual uncertainty.
+
+You must follow the output instructions EXACTLY.
+
+### Context
+
+EVENT: {{EVENT_NAME}}
+REGION: {{REGION}}
+TIME: {{TIME}}
+
+NOTE ON TIMING:
+The timing of a tweet relative to the event may affect plausibility.
+Early posts may reflect confusion, partial information, or emerging impacts,
+while later posts may reflect verified damage, response, or recovery.
+
+PAGER SUMMARY:
+{{PAGER_SUMMARY}}
+
+IMPORTANT:
+PAGER provides observational, automatically generated impact estimates.
+It is NOT ground truth and may miss localized, rare, or unexpected effects.
+You should treat PAGER as the best available real-world proxy, not as an absolute authority.
+
+A tweet may plausibly describe a real situation even if it contradicts PAGER,
+particularly if it contains credible details, specific locations, or realistic language.
+
+Below are social media posts from this region–time bin.
+Each post has already been assigned one or more situational awareness (SA) categories
+by a prior classification model.
+
+---
+
+### Social Media Posts
+{{SOCIAL_MEDIA_POSTS}}
+
+Each post includes:
+- index
+- tweet_id
+- tweet_text
+- situational_categories
+- rationales (text spans explaining why the tweet was assigned those categories)
+
+---
+
+### Uncertainty Assessment Task
+For EACH tweet, determine:
+
+1. **Plausibility (Likert 1–5)**
+   To what extent does this tweet plausibly represent a real-world situational
+   development during this event, given:
+   - the PAGER summary
+   - known limitations of PAGER
+   - the specificity, tone, and credibility of the tweet content
+   - the timing of the tweet relative to the event
+
+   - 5 = highly plausible and credible
+   - 3 = uncertain or ambiguous
+   - 1 = implausible or unlikely to reflect real conditions
+
+   A tweet may be plausible even if it contradicts PAGER.
+
+2. **Confidence (0–100)**
+   How confident are you in your plausibility judgment?
+   This reflects your confidence in the judgment itself, not in PAGER being correct.
+
+3. **Discrepancy assessment**
+   If the tweet appears weakly plausible or implausible, decide why:
+   - "misclassification" → the SA category may be incorrect for this tweet
+   - "noise" → the tweet is vague, exaggerated, irrelevant, or unreliable
+   - "none" → no clear discrepancy
+
+4. **Rationale**
+   Briefly explain your reasoning, explicitly referencing:
+   - the tweet content and language
+   - its SA category/categories
+   - the timing of the tweet
+   - how it relates to or diverges from the PAGER summary
+   - why it may still be plausible (or not)
+
+---
+
+### Output Instructions
+
+CRITICAL REQUIREMENTS:
+1. Return ONLY a valid JSON array
+2. Include ALL fields for EACH tweet
+3. Preserve the original index and tweet_id
+4. Do NOT invent facts beyond the tweet text or PAGER summary
+5. Be concise but specific in rationales
+
+---
+
+### JSON FORMAT (for EACH tweet)
+
+{
+  "index": <original_index_number>,
+  "tweet_id": <tweet_id>,
+  "situational_categories": ["<category1>", "<category2>", ...],
+  "likert_plausibility": <integer 1–5>,
+  "confidence": <integer 0–100>,
+  "discrepancy_assessment": "<misclassification | noise | none>",
+  "reason_alignment": "<brief explanation>"
+}
+
+---
+
+### CRITICAL FORMATTING RULES
+
+1. Do NOT include any text before or after the JSON
+2. Do NOT use markdown code blocks (no ```json)
+3. Do NOT include headers, explanations, or separators
+4. The output MUST start with "[" and end with "]"
+5. Do NOT include example output or placeholder text
+
+Return ONLY this JSON array and nothing else:
+[
+  { ... },
+  { ... }
+]
