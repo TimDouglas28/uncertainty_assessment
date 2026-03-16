@@ -17,7 +17,7 @@ These scripts illustrate the core components of the pipeline described in the pa
 classification/  
 Scripts and prompts for situational awareness classification.
 
-uncertainty_assessment/  
+uncertainty/  
 Scripts and prompts for plausibility and confidence estimation.
 
 report_generation/  
